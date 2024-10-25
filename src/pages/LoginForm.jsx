@@ -1,6 +1,7 @@
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import {toast} from "react-toastify";
+import ButtonRedirect from '../components/RedirectButton';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -25,24 +26,30 @@ const LoginForm = () => {
 
     return (
         <div className="d-flex justify-content-center align-items-center text-center" style={{height: '100vh'}}>
-            <form className="form-signin" onSubmit={handleLogin} style={{width: '300px'}}>
-                <img className="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt=""
-                     width="72" height="72"/>
-                <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
-                <div className="w-100 mb-2">
-                    <input type="email" id="inputEmail" name="login" className="form-control form-control-lg mb-2" placeholder="Email address" required
-                           autoFocus/>
-                    <input type="password" id="inputPassword" name="password" className="form-control form-control-lg" placeholder="Password" required />
-                </div>
-                <div className="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" defaultChecked={true} name="remember-me" value="remember-me"/> Remember me
-                    </label>
-                </div>
-                <button className="btn btn-lg btn-primary btn-block w-100" type="submit">Sign in</button>
-                <p className="mt-2 mb-3">Don't have an account? <Link to="/signup">SignUp</Link></p>
-                <p className="mt-4 mb-3 text-muted">© 2017-2018</p>
-            </form>
+            <Link className="btn btn-primary position-absolute" style={{top: '10px', right: '10px'}}
+                  to="/home">Home</Link>
+            <div className="d-flex flex-column align-items-center justify-content-center h-50 w-100">
+                <form className="form-signin" onSubmit={handleLogin} style={{width: '300px'}}>
+                    <img className="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
+                         alt="" width="72" height="72"/>
+                    <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
+                    <div className="w-100 mb-2">
+                        <input type="email" id="inputEmail" name="login" className="form-control form-control-lg mb-2"
+                               placeholder="Email address" required autoFocus/>
+                        <input type="password" id="inputPassword" name="password"
+                               className="form-control form-control-lg" placeholder="Password" required/>
+                    </div>
+                    <div className="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" defaultChecked={true} name="remember-me"
+                                   value="remember-me"/> Remember me
+                        </label>
+                    </div>
+                    <button className="btn btn-lg btn-primary btn-block w-100" type="submit">Sign in</button>
+                    <p className="mt-2 mb-3">Don't have an account? <Link to="/signup">SignUp</Link></p>
+                    <p className="mt-4 mb-3 text-muted">© 2017-2018</p>
+                </form>
+            </div>
         </div>
     );
 };
