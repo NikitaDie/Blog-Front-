@@ -1,5 +1,6 @@
 import React from 'react';
 import ButtonRedirect from './RedirectButton';
+import LoginLogoutButton from "./LoginLogoutButton";
 
 const Header = ({ buttonText, linkPath }) => {
     return (
@@ -10,7 +11,10 @@ const Header = ({ buttonText, linkPath }) => {
                     <span style={{ color: 'deeppink' }}>.</span>
                 </h1>
             </div>
-            <ButtonRedirect buttonText={buttonText} linkPath={linkPath} />
+            <div className="d-flex align-items-center">
+                <ButtonRedirect buttonText={buttonText} linkPath={linkPath} />
+                <LoginLogoutButton />
+            </div>
         </header>
     );
 };

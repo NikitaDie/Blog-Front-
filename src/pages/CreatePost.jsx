@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import MainContent from "../components/MainContent";
 import Background from "../components/Background";
 import { useNavigate, useParams } from "react-router-dom";
-import { Bounce, toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import {
     AdmonitionDirectiveDescriptor,
     headingsPlugin,
@@ -28,10 +28,16 @@ import {
 import '@mdxeditor/editor/style.css';
 import Separator from "../components/Separator";
 import useAuth from "../hooks/useAuth";
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/css/css';
+import 'codemirror/mode/xml/xml';
+import 'codemirror/mode/markdown/markdown';
+import 'codemirror/mode/python/python';
+import 'codemirror/mode/ruby/ruby';
 
 function CreatePost() {
     const { id } = useParams();
-    const { authed, userToken } = useAuth();
+    const { userToken } = useAuth();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const navigate = useNavigate();
@@ -44,8 +50,7 @@ function CreatePost() {
                     const response = await fetch(`/api/v1/posts/${id}`);
                     if (!response.ok) {
                         const errorData = await response.json();
-                        toast.error(errorData.message || 'Failed to fetch post data');
-                        return;
+                        throw new Error(errorData.message);
                     }
                     const postData = await response.json();
                     setTitle(postData.title);
@@ -69,8 +74,7 @@ function CreatePost() {
         };
         const method = id ? 'PUT' : 'POST';
         const url = id ? `/api/v1/posts/${id}` : '/api/v1/posts';
-        console.log(authed);
-        console.log(`Bearer ${userToken}`);
+
         try {
             const response = await fetch(url, {
                 method,
@@ -136,7 +140,18 @@ function CreatePost() {
                                                thematicBreakPlugin(),
                                                frontmatterPlugin(),
                                                codeBlockPlugin({ defaultCodeBlockLanguage: 'txt' }),
-                                               codeMirrorPlugin({ codeBlockLanguages: { js: 'JavaScript', css: 'CSS', txt: 'text', tsx: 'TypeScript', } }),
+                                               codeMirrorPlugin({
+                                                   codeBlockLanguages: {
+                                                       js: 'JavaScript',
+                                                       css: 'CSS',
+                                                       xml: 'XML',
+                                                       markdown: 'Markdown',
+                                                       python: 'Python',
+                                                       ruby: 'Ruby',
+                                                       txt: 'Text',
+                                                       tsx: 'TypeScript',
+                                                   }
+                                               }),
                                                directivesPlugin({ directiveDescriptors: [AdmonitionDirectiveDescriptor] }),
                                                diffSourcePlugin({ viewMode: 'rich-text', diffMarkdown: 'boo' }),
                                                markdownShortcutPlugin()
@@ -156,16 +171,6 @@ function CreatePost() {
                 </MainContent>
                 <Footer/>
             </Background>
-            <ToastContainer
-                position="bottom-right"
-                autoClose={3000}
-                hideProgressBar={false}
-                closeOnClick
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Bounce}
-            />
         </div>
     );
 }

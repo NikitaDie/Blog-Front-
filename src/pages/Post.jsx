@@ -65,7 +65,18 @@ function Post() {
                                 thematicBreakPlugin(),
                                 frontmatterPlugin(),
                                 codeBlockPlugin({ defaultCodeBlockLanguage: 'txt' }),
-                                codeMirrorPlugin({ codeBlockLanguages: { js: 'JavaScript', css: 'CSS', txt: 'text', tsx: 'TypeScript' } }),
+                                codeMirrorPlugin({
+                                    codeBlockLanguages: {
+                                        js: 'JavaScript',
+                                        css: 'CSS',
+                                        xml: 'XML',
+                                        markdown: 'Markdown',
+                                        python: 'Python',
+                                        ruby: 'Ruby',
+                                        txt: 'Text',
+                                        tsx: 'TypeScript',
+                                    }
+                                }),
                                 directivesPlugin({ directiveDescriptors: [AdmonitionDirectiveDescriptor] }),
                                 diffSourcePlugin({ viewMode: 'rich-text', diffMarkdown: 'boo' }),
                                 markdownShortcutPlugin()

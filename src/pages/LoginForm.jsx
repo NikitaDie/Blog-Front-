@@ -1,20 +1,24 @@
-import {useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import {toast} from "react-toastify";
 
-const Login = () => {
+const LoginForm = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
     const { state } = useLocation();
 
     const handleLogin = (e) => {
-        e.preventDefault(); // Prevent default form submission
+        e.preventDefault();
         const formData = new FormData(e.target);
         const user = formData.get('login');
         const password = formData.get('password');
         const rememberMe = formData.get('remember-me');
 
         login(user, password, rememberMe).then(() => {
+            toast.success('You have signed in!');
             navigate(state?.path || "/");
+        }).catch((err) => {
+            toast.error(`Login failed: ${err.message}`);
         });
     };
 
@@ -32,14 +36,15 @@ const Login = () => {
                 </div>
                 <div className="checkbox mb-3">
                     <label>
-                        <input type="checkbox" name="user" value="remember-me"/> Remember me
+                        <input type="checkbox" defaultChecked={true} name="remember-me" value="remember-me"/> Remember me
                     </label>
                 </div>
                 <button className="btn btn-lg btn-primary btn-block w-100" type="submit">Sign in</button>
-                <p className="mt-5 mb-3 text-muted">© 2017-2018</p>
+                <p className="mt-2 mb-3">Don't have an account? <Link to="/signup">SignUp</Link></p>
+                <p className="mt-4 mb-3 text-muted">© 2017-2018</p>
             </form>
         </div>
     );
 };
 
-export default Login;
+export default LoginForm;

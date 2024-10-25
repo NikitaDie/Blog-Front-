@@ -1,5 +1,5 @@
 import './App.css';
-import Login from "./pages/Login";
+import LoginForm from "./pages/LoginForm";
 import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
 import Post from "./pages/Post";
@@ -8,6 +8,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import 'react-toastify/dist/ReactToastify.css';
 import RequireAuth from "./components/RequireAuth";
+import SignupForm from "./pages/SignupForm";
+import UserActivation from "./pages/UserActivation";
+import NoPage from "./pages/NoPage";
+import {Bounce, ToastContainer} from "react-toastify";
+import React from "react";
 
 function App() {
   return (
@@ -16,8 +21,11 @@ function App() {
               <Routes>
                   <Route path="/">
                       <Route index element={<Home />} />
-                      <Route path="/login" element={<Login />} />
+                      <Route path="/login" element={<LoginForm />} />
+                      <Route path="/signup" element={<SignupForm />} />
                       <Route path="/home" element={<Home />} />
+                      <Route path="/post/:id" element={<Post />}/>
+                      <Route path="/activation" element={<UserActivation />}/>
                       <Route
                           path="/new"
                           element={
@@ -34,17 +42,19 @@ function App() {
                               </RequireAuth>
                           }
                       />
-                      <Route
-                          path="/post/:id"
-                          element={
-                              <RequireAuth>
-                                  <Post />
-                              </RequireAuth>
-                          }
-                      />
-                      {/*<Route path="*" element={<NoPage />} />*/}
+                      <Route path="*" element={<NoPage />} />
                   </Route>
               </Routes>
+              <ToastContainer
+                  position="bottom-right"
+                  autoClose={2000}
+                  hideProgressBar={false}
+                  closeOnClick
+                  draggable
+                  pauseOnHover
+                  theme="light"
+                  transition={Bounce}
+              />
           </BrowserRouter>
       </div>
   );
